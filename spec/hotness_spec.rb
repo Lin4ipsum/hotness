@@ -15,24 +15,49 @@ describe Hotness do
 
 	it "#seconds_from_start_time should return seconds from a given time" do
 		seconds_in_a_day = 86400 
-		aug_13 = Time.local(2014, 8, 13)
-		expect(@image.seconds_from_start_time(aug_13)).to eq(seconds_in_a_day)
+			thursday = Time.local(2014, 8, 14)
+		expect(@image.seconds_from_start_time(thursday)).to eq(seconds_in_a_day)
 	end
 
 	context "#hot" do
-		it "should return 0 hot when next day, 0 ups, 0 downs" do
-			thursday = Time.local(2014 8, 14)
-			expect(@image.hot(0, 0, thursday).to eq(1))
+		it "should return 1 hot score when 1 day later, 0 ups, 0 downs" do
+			thursday = Time.local(2014, 8, 14)
+			expect(@image.hot(0, 0, thursday)).to be == 1
 		end
 
-		it "" do
+		it "should return 2 hot score when 2 days, 0 ups, 0 downs" do
+			friday = Time.local(2014, 8, 15)
+			expect(@image.hot(0, 0, friday)).to be == 2
 		end
 
+		it "should return 7 hot score when 1 week later, 0 ups, 0 downs" do
+			one_week_later = Time.local(2014, 8, 20)
+			expect(@image.hot(0, 0, one_week_later)).to be == 7
+		end
 
+		it "should return > 30 hot score when 1 month later, 0 ups, 0 downs" do
+			one_month_later = Time.local(2014, 9, 13)
+			expect(@image.hot(0, 0, one_month_later)).to be > 30
+		end
 
+		it "should return hot score > 1, 1 day later, 5 ups, 0 downs" do
+			thursday = Time.local(2014, 8, 14)
+			expect(@image.hot(5, 0, thursday)).to be > 1
+		end
 
+		it "should return hot score > 2, 1 day later, 20 ups, 0 downs" do
+			thursday = Time.local(2014, 8, 14)
+			expect(@image.hot(20, 0, thursday)).to be > 2
+		end
+
+		it "should return hot score < 1, 1 day later, 0 ups, 5 downs" do
+			thursday = Time.local(2014, 8, 14)
+			expect(@image.hot(0, 5, thursday)).to be < 1
+		end
+
+		it "should return hot score < 0, 1 day later, 0 ups, 20 downs" do
+			thursday = Time.local(2014, 8, 14)
+			expect(@image.hot(0, 20, thursday)).to be < 0
+		end
 	end
-
-
-	
 end
