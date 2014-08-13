@@ -16,7 +16,7 @@ describe Hotness do
 	it "#seconds_from_start_time should return seconds from a given time" do
 		seconds_in_a_day = 86400 
 			thursday = Time.local(2014, 8, 14)
-		expect(@image.seconds_from_start_time(thursday)).to eq(seconds_in_a_day)
+		expect(@image.seconds_from_start_date(thursday)).to eq(seconds_in_a_day)
 	end
 
 	context "#hot" do
